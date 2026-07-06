@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Explore Unknowns sample run</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #f5f0e7; color: #141414; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, system-ui, sans-serif; }
+  main { max-width: 1280px; margin: 0 auto; padding: 32px; }
+  .sheet { background: #fffdf8; border: 1px solid #d2c7b4; box-shadow: 0 18px 45px rgba(35,24,10,.13); padding: 30px; }
+  .top { display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; border-bottom: 1px solid #d9cdb9; padding-bottom: 18px; }
+  h1 { margin: 0; font-size: 36px; letter-spacing: -.045em; line-height: .95; }
+  .tag { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: #574f45; background: #efe6d8; border: 1px solid #d7c9b5; padding: 8px 10px; border-radius: 999px; white-space: nowrap; }
+  .task { margin: 20px 0 18px; background: #181715; color: #f5f0e6; border-radius: 8px; padding: 15px 16px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 14px; line-height: 1.42; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  section { border: 1px solid #ded2c1; background: #fffaf1; padding: 16px; min-height: 150px; }
+  h2 { margin: 0 0 10px; font-size: 16px; letter-spacing: -.015em; text-transform: lowercase; }
+  ul { margin: 0; padding-left: 18px; }
+  li { margin: 6px 0; line-height: 1.35; font-size: 14px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 13px; }
+  th, td { border: 1px solid #cdbfaa; padding: 8px; text-align: left; vertical-align: top; }
+  th { background: #eee3d2; }
+  .question { grid-column: 1 / -1; background: #191817; color: #faf4ea; }
+  .question h2 { color: #f7e7c6; }
+  .question .q { font-size: 22px; line-height: 1.18; letter-spacing: -.025em; font-weight: 700; max-width: 1060px; }
+  .question p { color: #d9cdbb; margin: 12px 0 0; line-height: 1.42; max-width: 1080px; }
+  .plan { grid-column: 1 / -1; }
+  .plan ol { margin: 0; padding-left: 20px; columns: 2; column-gap: 40px; }
+  .plan li { break-inside: avoid; margin: 6px 0; font-size: 14px; }
+  .muted { color: #655d52; font-size: 13px; margin-top: 8px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="sheet">
+    <div class="top">
+      <div>
+        <h1>Explore Unknowns<br>sample run</h1>
+        <div class="muted">actual run with Claude Code using model <strong>fable</strong></div>
+      </div>
+      <div class="tag">source → skill → one useful question</div>
+    </div>
+
+    <div class="task">Task: build a Fable-style agent that takes a vague feature idea, explores unknowns before coding, and returns the one question most likely to change the implementation.</div>
+
+    <div class="grid">
+      <section>
+        <h2>known knowns</h2>
+        <ul>
+          <li>Input is a vague feature idea. Output is one clarifying question, not a spec.</li>
+          <li>The workflow order is fixed: explore first, code never in this phase.</li>
+          <li>The question is ranked by leverage: how much the answer would change implementation.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>known unknowns</h2>
+        <ul>
+          <li>What territory does the agent explore: idea only, or idea plus repo/docs?</li>
+          <li>Who answers: a human waiting synchronously, or an async review queue?</li>
+          <li>What is the exploration budget: seconds, or a multi-step pass?</li>
+          <li>What does "changes implementation" mean: data model, UX, or risk posture?</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>unknown knowns</h2>
+        <ul>
+          <li>Option A: one plain sentence, the question alone.</li>
+          <li>Option B: the question, why it is load-bearing, and what changes with each answer.</li>
+          <li>Option C: top three questions ranked, winner flagged.</li>
+          <li>A reaction like "B, but shorter" is the data we are after.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>unknown unknowns</h2>
+        <table>
+          <tr><th>risk</th><th>de-risk</th></tr>
+          <tr><td>No repo or docs</td><td>ask about users, not files</td></tr>
+          <tr><td>Question fatigue</td><td>skip when unknowns are cheap to guess</td></tr>
+          <tr><td>No ground truth</td><td>log whether the answer changed the plan</td></tr>
+          <tr><td>Exploration creep</td><td>cap steps before the question ships</td></tr>
+        </table>
+      </section>
+
+      <section class="question">
+        <h2>next question</h2>
+        <div class="q">When the agent asks its one question, who is on the other end: a human waiting synchronously, or an async review queue?</div>
+        <p>Synchronous means the run should finish in about 30 seconds and stay single-pass. Async permits a deeper sweep. This one answer decides runtime architecture, exploration budget, and whether a skip threshold is optional or essential.</p>
+      </section>
+
+      <section class="plan">
+        <h2>decision-first plan</h2>
+        <ol>
+          <li>Interaction contract: sync vs async answering.</li>
+          <li>Input territory: idea only vs idea plus repo/docs.</li>
+          <li>Output shape: pick A/B/C by reacting to samples.</li>
+          <li>Skip condition: when asking is not worth the interruption.</li>
+          <li>Then mechanics: exploration loop, ranking heuristic, answer-impact logging.</li>
+        </ol>
+      </section>
+    </div>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "0.1.0",
+  "skills": [
+    {
+      "name": "explore-unknowns",
+      "displayName": "Explore Unknowns",
+      "status": "candidate",
+      "description": "Map agent-task unknowns before long-horizon work with a four-quadrant knowns/unknowns walk, blindspot pass, decision-first plan, implementation notes, sample-run proof, and merge quiz.",
+      "path": "skills/explore-unknowns",
+      "supportedRuntimes": [
+        "hermes-agent",
+        "claude-code",
+        "codex"
+      ],
+      "categories": [
+        "Developer Tools",
+        "Agent Workflow",
+        "Software Development",
+        "Decision Support"
+      ],
+      "license": "MIT-0",
+      "releaseGate": "skill-quality-v0"
+    }
+  ]
+}
