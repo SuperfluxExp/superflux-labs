@@ -1,0 +1,56 @@
+name: Private denylist safety
+
+on:
+  pull_request_target:
+  push:
+    branches:
+      - main
+  schedule:
+    # Recurring private scan for the public surface.
+    - cron: '29 8 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  private-denylist-pr:
+    # Pull requests are scanned with trusted scanner code from the base branch.
+    # Candidate PR files are checked out as data only and are never executed.
+    if: github.event_name == 'pull_request_target'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out trusted scanner from base branch
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: scanner
+          persist-credentials: false
+
+      - name: Check out candidate PR files as data
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: candidate
+          persist-credentials: false
+
+      - name: Run trusted private denylist scan on candidate files
+        env:
+          PUBLIC_ARTIFACT_DENYLIST: ${{ secrets.PUBLIC_ARTIFACT_DENYLIST }}
+        run: python scanner/scripts/check_public_artifact_safety.py --root candidate --require-private-denylist
+
+  private-denylist-trusted-branch:
+    # On trusted branch events, the branch's own scanner is safe to execute.
+    if: github.event_name != 'pull_request_target' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - name: Run private denylist scan
+        env:
+          PUBLIC_ARTIFACT_DENYLIST: ${{ secrets.PUBLIC_ARTIFACT_DENYLIST }}
+        run: python scripts/check_public_artifact_safety.py --root . --require-private-denylist
