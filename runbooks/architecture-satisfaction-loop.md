@@ -21,6 +21,16 @@ At the end, the agent should leave one of these states:
 
 The loop should not run forever.
 
+## Loop contract
+
+This runbook follows the loop-engineering shape described by The Pragmatic Engineer's “What is loop engineering?”: a loop needs a durable goal, a way to carry state between turns, a fresh-context restart path, and an explicit stop rule.
+
+- **Trigger:** a review comment, design note, or agent self-review says the code works but the shape is hard to trust.
+- **Goal:** improve the named architectural dissatisfaction while keeping behavior and checks intact, or document why the next move needs a human decision.
+- **State to persist:** keep a short architecture loop note in the PR description, issue, or `architecture-loop-notes.md`. It should list the dissatisfaction sentence, files touched, current pass number, checks run, and remaining risk.
+- **Iteration rule:** each pass handles one dissatisfaction and one small refactor. If another pass is needed, restart from the persisted note, not from hidden chat memory.
+- **Budget / gate:** two passes maximum. Stop earlier if the next change is a product, ownership, or broad redesign decision.
+
 ## Workflow
 
 ### 1. Name the dissatisfaction
@@ -51,6 +61,8 @@ The agent lists:
 - the tests or checks that currently protect the behavior.
 
 If the agent cannot map the current shape, it must stop and ask for a narrower target.
+
+Record this map in the loop note so a later pass can restart with clean context.
 
 ### 3. Propose the smallest refactor
 
@@ -91,6 +103,17 @@ The agent must answer:
 - Is the diff small enough to review?
 
 If the answer is not clearly yes, revert or stop with a review note.
+
+### 6. Update the loop note
+
+The agent appends:
+
+- what changed in this pass;
+- the before/after check results;
+- whether the named dissatisfaction is resolved;
+- whether another pass is allowed under the two-pass budget.
+
+If another pass is needed, start from this note and the current repo state. Do not rely on the prior chat context being complete.
 
 ## Verification
 
@@ -135,6 +158,12 @@ The architecture question is actually about product behavior or ownership.
 
 Stop and mark a human review gate.
 
+### Lost context between passes
+
+The agent starts a second pass with stale memory and repeats work or changes the wrong boundary.
+
+Prevent this by writing the loop note before restarting.
+
 ## Minimal example
 
 A data sync client has retry logic in three methods.
@@ -150,6 +179,14 @@ Smallest refactor:
 - run the existing sync tests;
 - add one test for retry exhaustion if missing.
 
+Loop note after pass 1:
+
+- dissatisfaction: retry policy duplicates across three sync methods;
+- files: `sync_client.py`, `test_sync_client.py`;
+- change: extracted `retry_with_backoff()`;
+- checks: sync tests pass;
+- status: resolved, no second pass needed.
+
 Stop when:
 
 - duplication is removed;
@@ -160,4 +197,4 @@ Stop when:
 
 Adapted from public discussion around Peter Steinberger's Architecture Satisfaction Loop and Loop Library's [Architecture Refactoring Loop for Coding Agents](https://signals.forwardfuture.com/loop-library/loops/architecture-satisfaction-loop/).
 
-This version adds explicit verification, failure modes, and a two-pass stop condition.
+This version adds explicit verification, persisted loop state, fresh-context restart guidance, failure modes, and a two-pass stop condition. It also incorporates the goal/state/stop framing from Gergely Orosz's Pragmatic Engineer article, [“What is loop engineering?”](https://newsletter.pragmaticengineer.com/p/what-is-loop-engineering).

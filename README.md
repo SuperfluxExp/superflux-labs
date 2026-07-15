@@ -79,6 +79,18 @@ That difference matters. Teams are already handing real repos, docs, tickets, CI
 
 Runbooks make the boundary explicit.
 
+#### Loop engineering framing
+
+The Pragmatic Engineer's [“What is loop engineering?”](https://newsletter.pragmaticengineer.com/p/what-is-loop-engineering) is a useful bar for this repo. A real agent loop is not just repeated prompting. It needs:
+
+- a durable goal or completion condition;
+- state that survives a fresh context window;
+- a clear trigger, such as a human request, failing check, event, or schedule;
+- verification after each pass;
+- a budget, retry cap, or human gate.
+
+This repo should treat those as part of the runbook contract.
+
 #### Current runbooks
 
 - [Architecture Satisfaction Loop](runbooks/architecture-satisfaction-loop.md)
@@ -91,13 +103,14 @@ A good agent runbook is small enough to use and strict enough to trust.
 Each runbook should include:
 
 1. **Use when** — the exact trigger.
-2. **Outcome** — what should be true when the loop is done.
-3. **Workflow** — the prompts, commands, checks, or agent instructions.
-4. **Verification** — tests, live checks, review steps, artifacts, or receipts.
-5. **Stop condition** — the rule that prevents endless agent motion.
-6. **Failure modes** — how the workflow goes wrong and how to bound the damage.
-7. **Example** — a minimal realistic case.
-8. **Source / credit** — public links and acknowledgements for adapted ideas.
+2. **Outcome / goal** — what should be true when the loop is done.
+3. **Loop contract** — trigger, persisted state, iteration rule, budget, and human gate.
+4. **Workflow** — the prompts, commands, checks, or agent instructions.
+5. **Verification** — tests, live checks, review steps, artifacts, or receipts.
+6. **Stop condition** — the rule that prevents endless agent motion.
+7. **Failure modes** — how the workflow goes wrong and how to bound the damage.
+8. **Example** — a minimal realistic case.
+9. **Source / credit** — public links and acknowledgements for adapted ideas.
 
 Runbooks can include prompts. They are not prompt libraries.
 
@@ -147,5 +160,7 @@ The best contributions are not shiny prompts. They are repeatable loops that lea
 The `explore-unknowns` package is a source-grounded skill package, not an article mirror. It credits the public source, preserves short excerpts in a ledger, and converts the idea into a runnable agent workflow. It does not imply endorsement from Thariq, Anthropic, David/dzhng, or Fable.
 
 The first seed for Agent Runbooks came from public discussion around Peter Steinberger's Architecture Satisfaction Loop, including Loop Library's [Architecture Refactoring Loop for Coding Agents](https://signals.forwardfuture.com/loop-library/loops/architecture-satisfaction-loop/), and the broader idea of repeatable agent loops.
+
+The loop-engineering framing also credits Gergely Orosz's Pragmatic Engineer article, [“What is loop engineering?”](https://newsletter.pragmaticengineer.com/p/what-is-loop-engineering), especially the distinction between one-off prompts and durable goals with state, verification, context resets, and stop conditions.
 
 Good credit makes the corpus better. It lets builders trace where ideas came from, compare variants, and improve the workflow without pretending it appeared from nowhere.

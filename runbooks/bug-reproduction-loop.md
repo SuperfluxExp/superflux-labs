@@ -20,6 +20,16 @@ At the end, the agent should leave one of these states:
 
 A confident guess is not a valid outcome.
 
+## Loop contract
+
+This runbook follows the loop-engineering shape described by The Pragmatic Engineer's “What is loop engineering?”: a loop needs a durable goal, a way to carry state between turns, a fresh-context restart path, and an explicit stop rule.
+
+- **Trigger:** a bug report, failing check, support ticket, exception, or alert points to behavior that should be corrected.
+- **Goal:** make the original repro pass while keeping the nearest regression checks green, or produce a precise cannot-reproduce / blocked report.
+- **State to persist:** keep a short bug loop note in the PR description, issue, or `bug-loop-notes.md`. It should list the symptom, repro attempts, failing signal, cause sentence, fix attempt, passing signal, and remaining risk.
+- **Iteration rule:** each pass tries one repro path or one smallest-cause fix. If another pass is needed, restart from the persisted note and current repo state, not from hidden chat memory.
+- **Budget / gate:** after two plausible repro paths fail, stop and report what evidence is missing. Stop immediately if the fix needs credentials, production data, a feature flag, or a human product decision.
+
 ## Workflow
 
 ### 1. Restate the symptom
@@ -57,6 +67,8 @@ Preferred order:
 
 The agent must capture the repro result before changing code.
 
+Append the repro result to the loop note, even when the attempt fails to reproduce the bug.
+
 ### 4. Isolate the cause
 
 The agent names the cause in one sentence.
@@ -90,6 +102,8 @@ The final note must include both:
 
 - the original failing signal;
 - the passing signal after the fix.
+
+Then update the loop note with the final state: fixed, cannot reproduce, or blocked.
 
 ## Verification
 
@@ -139,6 +153,12 @@ The agent rewrites the subsystem and creates review risk.
 
 Prevent this with the smallest-cause rule.
 
+### Lost context between attempts
+
+The agent forgets which repro paths failed and loops through the same guesses.
+
+Prevent this by updating the bug loop note after every pass.
+
 ## Minimal example
 
 Symptom:
@@ -160,6 +180,14 @@ Fix:
 - skip leading blank rows only before header detection;
 - preserve row mapping after the header is found.
 
+Loop note after pass 1:
+
+- symptom: leading blank line shifts CSV columns;
+- repro: CSV import fixture failed before fix;
+- cause: blank-row handling changed the header index;
+- checks: new repro test and existing CSV import tests pass;
+- status: fixed and verified.
+
 Verify:
 
 - the new failing test passes;
@@ -168,3 +196,5 @@ Verify:
 ## Source / credit
 
 This runbook adapts a common test-first debugging loop used by experienced engineering teams: reproduce, isolate, test, fix, verify, then report the remaining risk.
+
+It also incorporates the goal/state/stop framing from Gergely Orosz's Pragmatic Engineer article, [“What is loop engineering?”](https://newsletter.pragmaticengineer.com/p/what-is-loop-engineering).
