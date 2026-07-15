@@ -1,0 +1,86 @@
+name: Runbook feedback
+description: Share public-safe feedback from trying an Agent Runbooks workflow.
+title: "[Runbook feedback]: "
+labels:
+  - runbook-feedback
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for trying an Agent Runbooks workflow. Keep this issue public-safe: use public repo links or invented examples only, and do not paste private logs or customer data.
+  - type: input
+    id: runbook
+    attributes:
+      label: Runbook used
+      description: Which runbook did you try?
+      placeholder: PR Babysitter Loop
+    validations:
+      required: true
+  - type: dropdown
+    id: scenario-type
+    attributes:
+      label: Scenario type
+      description: Was this run on a public repo or an invented/toy scenario?
+      options:
+        - Public repo or public PR
+        - Invented/toy scenario
+    validations:
+      required: true
+  - type: textarea
+    id: prompt
+    attributes:
+      label: What did you ask the agent to do?
+      description: Summarize the request without private context.
+      placeholder: "Watch PR #42 until checks and submitted review feedback are resolved."
+    validations:
+      required: true
+  - type: textarea
+    id: expected-outcome
+    attributes:
+      label: Expected outcome
+      description: What did you expect the runbook to produce?
+      placeholder: A ready-for-human-merge handoff with current checks, review state, and stop reason.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence the agent produced
+      description: List public-safe commands, checks, artifacts, or handoff details.
+      placeholder: "Checked head SHA, check conclusions, submitted review state, mergeability, and final stop reason."
+    validations:
+      required: true
+  - type: textarea
+    id: unclear-step
+    attributes:
+      label: Where was the runbook unclear or hard to apply?
+      description: Name the smallest confusing step, missing gate, or weak instruction.
+      placeholder: "The runbook did not say whether this CI failure was branch-owned or infrastructure."
+    validations:
+      required: false
+  - type: dropdown
+    id: stop-condition
+    attributes:
+      label: Did the stop condition prevent unsafe action?
+      options:
+        - Yes
+        - No
+        - Not sure
+        - Not applicable
+    validations:
+      required: true
+  - type: textarea
+    id: public-links
+    attributes:
+      label: Optional public links
+      description: Add only public repo, PR, issue, or artifact links. Leave blank if the example is invented.
+      placeholder: "https://github.com/example/repo/pull/42"
+    validations:
+      required: false
+  - type: checkboxes
+    id: public-safety
+    attributes:
+      label: Public-safety confirmation
+      options:
+        - label: I confirm this issue contains no private logs, customer data, credentials, private PRs, private tickets, local machine paths, screenshots with private data, or internal operating notes.
+          required: true
