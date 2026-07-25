@@ -2,10 +2,8 @@
 
 **Date:** July 25, 2026
 **Condition:** Same agent family, no access to `write-through-problems` or Recursive Thought Writing.
-**Method:** Three blind, independent scenarios. The full persisted outputs are retained by the evaluation runner; this public receipt records only synthetic prompts, bounded excerpts, and grading.
-
-**Harness:** Hermes Agent `delegate_task`; leaf agents inherited the parent session model `openai-codex / gpt-5.6-sol`.
-**Evaluation batch:** `deleg_504f6f3c`
+**Method:** Three blind, independent scenarios. This public receipt records only synthetic prompts, bounded excerpts, checksums, and grading.
+**Execution order:** The baseline completed before `SKILL.md` package authoring began.
 **Output receipts (SHA-256):**
 
 - founder output: `65964a179487b674a751624c0b6257da15eb7004db7dcc5569303131ca4b96e9`;

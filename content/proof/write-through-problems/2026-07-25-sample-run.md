@@ -4,9 +4,10 @@
 **Skill:** `write-through-problems` / Recursive Thought Writing
 **Mode:** Quick
 **Result:** pass — 1,076 words, 16/16 rubric, no hard failures
-**Output SHA-256:** `06084c20691bd7cbadf0bcb6b80a4b78966f48292577beeece053eebe18c5b60`
+**Public output bytes:** 6,947
+**Public output SHA-256:** `d39ad90b0ffb7a5ba6e75ab6dba54b449537b6e45bd433d3a03b546c472b22c7`
 
-The hash refers to the original runner artifact. The text below is unchanged except that trailing Markdown line-ending spaces were normalized for repository hygiene.
+The receipt is calculated over the UTF-8 text after the `Skill-guided output` heading and its blank line, including the final newline. The validator recomputes it so any output change fails the package.
 
 ## Synthetic prompt
 

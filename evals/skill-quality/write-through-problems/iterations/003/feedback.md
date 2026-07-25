@@ -6,8 +6,8 @@
 
 ## Measured outcome
 
-- **Length:** 1,076 words / 6,960 bytes
-- **SHA-256:** `06084c20691bd7cbadf0bcb6b80a4b78966f48292577beeece053eebe18c5b60`
+- **Original runner output:** 1,076 words / 6,960 bytes; trailing Markdown line-ending spaces were normalized for publication
+- **Self-verifying public proof:** 1,076 words / 6,947 bytes; SHA-256 `d39ad90b0ffb7a5ba6e75ab6dba54b449537b6e45bd433d3a03b546c472b22c7`
 - **Recursion:** one cycle
 - **Islands:** four, with six named edges
 - **Graduated artifact:** reversible 20-minute exposure experiment
@@ -40,4 +40,4 @@ The run:
 | Public safety | 2 |
 | **Total** | **16/16** |
 
-No hard failure was observed. The exact public-safe output is preserved in `content/proof/write-through-problems/2026-07-25-sample-run.md`.
+No hard failure was observed. The public-safe output is preserved in `content/proof/write-through-problems/2026-07-25-sample-run.md`, with trailing line-ending spaces normalized and both hashes recorded.

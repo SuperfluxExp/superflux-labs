@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -239,11 +240,16 @@ export function validateWriteThroughProblems(root = defaultRoot) {
     "Founder noodling",
     "Architecture from mixed note",
     "Unarticulated design reaction",
-    "openai-codex / gpt-5.6-sol",
+    "baseline completed before `SKILL.md` package authoring began",
     "SHA-256",
     "Baseline rubric scores",
   ]) {
     assertIncludes(baselineText, marker, `baseline receipt ${marker}`);
+  }
+  for (const pattern of [/deleg_[A-Za-z0-9]+/, /delegate_task/i, /openai-codex/i, /gpt-\d/i]) {
+    if (pattern.test(baselineText)) {
+      throw new Error(`internal evaluation marker ${pattern} found in public baseline receipt`);
+    }
   }
 
   const feedbackText = readText(iterationFeedback);
@@ -255,16 +261,25 @@ export function validateWriteThroughProblems(root = defaultRoot) {
   assertIncludes(iterationTwoText, "600–1,000 words", "iteration two generation buffer");
 
   const iterationThreeText = readText(iterationThreeFeedback);
-  assertIncludes(iterationThreeText, "1,076 words / 6,960 bytes", "iteration three passing measurement");
+  assertIncludes(iterationThreeText, "**Original runner output:** 1,076 words / 6,960 bytes", "iteration three runner measurement");
+  assertIncludes(iterationThreeText, "**Self-verifying public proof:** 1,076 words / 6,947 bytes", "iteration three public proof measurement");
   assertIncludes(iterationThreeText, "16/16", "iteration three rubric score");
 
   const proofText = readText(proofFile);
-  assertIncludes(proofText, "Skill-guided output (trailing whitespace normalized)", "public proof output heading");
-  assertIncludes(
-    proofText,
-    "06084c20691bd7cbadf0bcb6b80a4b78966f48292577beeece053eebe18c5b60",
-    "public proof output hash",
-  );
+  const proofOutputMarker = "## Skill-guided output (trailing whitespace normalized)\n\n";
+  assertIncludes(proofText, proofOutputMarker, "public proof output heading");
+  const expectedProofHash = "d39ad90b0ffb7a5ba6e75ab6dba54b449537b6e45bd433d3a03b546c472b22c7";
+  const expectedProofBytes = 6947;
+  assertIncludes(proofText, expectedProofHash, "public proof output hash receipt");
+  assertIncludes(proofText, "Public output bytes:** 6,947", "public proof output byte receipt");
+  const proofOutput = proofText.slice(proofText.indexOf(proofOutputMarker) + proofOutputMarker.length);
+  const actualProofHash = crypto.createHash("sha256").update(proofOutput, "utf8").digest("hex");
+  const actualProofBytes = Buffer.byteLength(proofOutput, "utf8");
+  if (actualProofHash !== expectedProofHash || actualProofBytes !== expectedProofBytes) {
+    throw new Error(
+      `public proof output hash mismatch: expected ${expectedProofHash}/${expectedProofBytes} bytes, got ${actualProofHash}/${actualProofBytes} bytes`,
+    );
+  }
 
   const catalog = JSON.parse(readText(path.join(root, "catalog", "skills.json")));
   const entry = catalog.skills?.find((item) => item.name === skillName);

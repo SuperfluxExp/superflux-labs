@@ -85,6 +85,27 @@ test("the validator rejects private absolute paths in public text", () => {
   }
 });
 
+test("the validator rejects internal evaluation markers in the public baseline receipt", () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "write-through-problems-internal-marker-"));
+  try {
+    copyDir(root, tmp);
+    const baseline = path.join(
+      tmp,
+      "evals",
+      "skill-quality",
+      "write-through-problems",
+      "baseline-pressure-scenario.md",
+    );
+    fs.appendFileSync(baseline, "\nInternal batch: deleg_deadbeef via delegate_task\n");
+
+    const result = runValidator(tmp);
+    assert.notEqual(result.status, 0);
+    assert.match(`${result.stdout}\n${result.stderr}`, /internal evaluation marker/);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
+});
+
 test("the validator rejects an urgent eval without an explicit execution mode", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "write-through-problems-missing-mode-"));
   try {
@@ -250,3 +271,31 @@ test(
     }
   },
 );
+
+test("the validator rejects tampering with the embedded public proof output", () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "write-through-problems-proof-tamper-"));
+  try {
+    copyDir(root, tmp);
+    const proofFile = path.join(
+      tmp,
+      "content",
+      "proof",
+      "write-through-problems",
+      "2026-07-25-sample-run.md",
+    );
+    const text = fs.readFileSync(proofFile, "utf8");
+    fs.writeFileSync(
+      proofFile,
+      text.replace(
+        "Success in this session is the artifact leaving your hands.",
+        "Success in this session is more private polishing.",
+      ),
+    );
+
+    const result = runValidator(tmp);
+    assert.notEqual(result.status, 0);
+    assert.match(`${result.stdout}\n${result.stderr}`, /public proof output hash mismatch/);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
+});
