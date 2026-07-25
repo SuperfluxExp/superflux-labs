@@ -20,6 +20,27 @@
       ],
       "license": "MIT-0",
       "releaseGate": "skill-quality-v0"
+    },
+    {
+      "name": "write-through-problems",
+      "displayName": "Recursive Thought Writing",
+      "status": "candidate",
+      "description": "Write through messy problems before premature convergence: preserve raw thoughts, transform reactions and ideas, map subproblem islands and edges, diffuse, recurse, and graduate into a decision artifact.",
+      "path": "skills/write-through-problems",
+      "supportedRuntimes": [
+        "hermes-agent",
+        "claude-code",
+        "codex"
+      ],
+      "categories": [
+        "Agent Workflow",
+        "Decision Support",
+        "Writing",
+        "Problem Solving"
+      ],
+      "license": "MIT-0",
+      "proof": "content/proof/write-through-problems/2026-07-25-sample-run.md",
+      "releaseGate": "skill-quality-v0"
     }
   ]
 }
