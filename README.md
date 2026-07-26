@@ -91,10 +91,11 @@ The Pragmatic Engineer's [“What is loop engineering?”](https://newsletter.pr
 
 This repo should treat those as part of the runbook contract.
 
-#### Current runbooks
+#### Current runbooks (3/5 of the first-five corpus)
 
 - [Architecture Satisfaction Loop](runbooks/architecture-satisfaction-loop.md)
 - [Bug Reproduction Loop](runbooks/bug-reproduction-loop.md)
+- [PR Babysitter Loop](runbooks/pr-babysitter-loop.md)
 
 #### What belongs in a runbook
 
@@ -153,6 +154,8 @@ If this helps, star or watch the repo.
 
 If you have a workflow pain that agents keep mishandling, open an issue or suggest a runbook.
 
+If a runbook fails, produces weak evidence, or prevents an unsafe action, open a Runbook feedback issue with public or invented details only.
+
 The best contributions are not shiny prompts. They are repeatable loops that leave evidence.
 
 ## Source and credit
@@ -162,5 +165,7 @@ The `explore-unknowns` package is a source-grounded skill package, not an articl
 The first seed for Agent Runbooks came from public discussion around Peter Steinberger's Architecture Satisfaction Loop, including Loop Library's [Architecture Refactoring Loop for Coding Agents](https://signals.forwardfuture.com/loop-library/loops/architecture-satisfaction-loop/), and the broader idea of repeatable agent loops.
 
 The loop-engineering framing also credits Gergely Orosz's Pragmatic Engineer article, [“What is loop engineering?”](https://newsletter.pragmaticengineer.com/p/what-is-loop-engineering), especially the distinction between one-off prompts and durable goals with state, verification, context resets, and stop conditions.
+
+The PR Babysitter Loop credits public prior art from `openai/codex` and `novotnyllc/babysit-pr` while keeping this repository's runbook a clean-room operating procedure.
 
 Good credit makes the corpus better. It lets builders trace where ideas came from, compare variants, and improve the workflow without pretending it appeared from nowhere.
