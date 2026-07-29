@@ -56,6 +56,40 @@ See [`content/proof/explore-unknowns/2026-07-06-sample-run.md`](content/proof/ex
 
 ![Explore Unknowns sample run](content/proof/explore-unknowns/2026-07-06-sample-run.png)
 
+### `write-through-problems` — Recursive Thought Writing
+
+An original process created by Kandarp Jani in March 2023 and now packaged as a portable agent skill.
+
+It prevents a messy note from collapsing into the first plausible answer:
+
+- capture every question, idea, observation, constraint, and reaction without filtering;
+- transform each item into a test, investigation, evidence check, or accepted boundary;
+- map named islands of subproblems and the edges between them;
+- zoom out through a real or synthetic diffuse pass;
+- recurse with a finite budget and socialize one concrete artifact;
+- graduate into a decision brief, experiment, architecture note, specification, or outline.
+
+#### Install into Claude Code + Codex
+
+```bash
+npx -y skills add . --skill write-through-problems --agent claude-code codex --copy -y --full-depth
+```
+
+#### Install into Hermes Agent for local testing
+
+```bash
+TMP_HERMES=$(mktemp -d)
+mkdir -p "$TMP_HERMES/skills"
+cp -R skills/write-through-problems "$TMP_HERMES/skills/write-through-problems"
+HERMES_HOME="$TMP_HERMES" hermes skills list | grep -i write-through-problems
+```
+
+The package includes a reusable [recursive thought map](skills/write-through-problems/templates/recursive-thought-map.md), a [source ledger](skills/write-through-problems/references/source-ledger.md), and [failing-first evaluations](evals/skill-quality/write-through-problems/expected-behavior.md).
+
+#### Proof
+
+See the passing [Quick-mode sample run](content/proof/write-through-problems/2026-07-25-sample-run.md): 1,076 words, 16/16 rubric, no hard failures.
+
 ### Agent runbooks
 
 AI agents do not need more prompt dumps. They need operating procedures.
@@ -161,6 +195,8 @@ The best contributions are not shiny prompts. They are repeatable loops that lea
 ## Source and credit
 
 The `explore-unknowns` package is a source-grounded skill package, not an article mirror. It credits the public source, preserves short excerpts in a ledger, and converts the idea into a runnable agent workflow. It does not imply endorsement from Thariq, Anthropic, David/dzhng, or Fable.
+
+The `write-through-problems` package publishes Kandarp Jani's own March 2023 Recursive Thought Writing process with his explicit permission. The original presentation is not included; the public package contains the attributed method, agent adaptations, template, and evaluations.
 
 The first seed for Agent Runbooks came from public discussion around Peter Steinberger's Architecture Satisfaction Loop, including Loop Library's [Architecture Refactoring Loop for Coding Agents](https://signals.forwardfuture.com/loop-library/loops/architecture-satisfaction-loop/), and the broader idea of repeatable agent loops.
 

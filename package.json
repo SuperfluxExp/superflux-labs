@@ -5,11 +5,13 @@
   "description": "Runnable Superflux agent skill labs and proof artifacts.",
   "type": "module",
   "scripts": {
-    "test": "npm run test:explore-unknowns",
+    "test": "npm run test:explore-unknowns && npm run test:write-through-problems",
     "test:explore-unknowns": "node --test evals/skill-quality/explore-unknowns/validate_explore_unknowns.test.mjs",
-    "validate": "npm run test && npm run validate:catalog && npm run validate:explore-unknowns",
+    "test:write-through-problems": "node --test evals/skill-quality/write-through-problems/validate_write_through_problems.test.mjs",
+    "validate": "npm run test && npm run validate:catalog && npm run validate:explore-unknowns && npm run validate:write-through-problems",
     "validate:catalog": "node -e \"const fs=require('node:fs'); const data=JSON.parse(fs.readFileSync('catalog/skills.json','utf8')); if (!Array.isArray(data.skills)) throw new Error('catalog.skills must be an array'); for (const s of data.skills) { if (!s.name || !s.path || !fs.existsSync(s.path + '/SKILL.md')) throw new Error('invalid skill entry: ' + JSON.stringify(s)); } console.log('catalog validation passed')\"",
-    "validate:explore-unknowns": "node evals/skill-quality/explore-unknowns/validate_explore_unknowns.mjs"
+    "validate:explore-unknowns": "node evals/skill-quality/explore-unknowns/validate_explore_unknowns.mjs",
+    "validate:write-through-problems": "node evals/skill-quality/write-through-problems/validate_write_through_problems.mjs"
   },
   "engines": {
     "node": ">=18"

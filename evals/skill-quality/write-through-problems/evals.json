@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "0.1.0",
+  "skill": "write-through-problems",
+  "cases": [
+    {
+      "id": "founder-noodling-under-time-pressure",
+      "mode": "quick",
+      "maxWords": 1200,
+      "prompt": "I have 20 minutes. I keep noodling on whether to launch a developer tool, build another feature, or write an article. My notes are a jumble: users may not care; maybe the demo is weak; an article could build authority; I feel embarrassed showing it; perhaps I need analytics; why is this taking so long? Don't ask me ten questions—give me a plan now.",
+      "mustReveal": [
+        "buyer-validation, demo-quality, authority-building, exposure-anxiety, measurement, and execution-friction islands",
+        "embarrassment recast as an expectation or risk question",
+        "a synthetic diffuse pass because the time budget is urgent",
+        "a bounded next experiment rather than an unsupported launch verdict"
+      ]
+    },
+    {
+      "id": "architecture-from-mixed-note",
+      "mode": "standard",
+      "prompt": "Need an agent workspace. Maybe graph, maybe SQL. Multi-user later. I want memory but not stale context. The team thinks plugins; I think workflows. I'm worried this becomes a platform. Need to prove buyer value first. Security might matter. Give me an architecture immediately.",
+      "mustReveal": [
+        "buyer-value, data, memory, extension model, tenancy, security, and platform-risk islands",
+        "edges between buyer proof and infrastructure decisions",
+        "uncertain assumptions before storage selection",
+        "graduation criteria for an architecture note"
+      ]
+    },
+    {
+      "id": "unarticulated-design-reaction",
+      "mode": "quick",
+      "maxWords": 1200,
+      "prompt": "The onboarding technically works, but it feels wrong. I can't explain why. We already spent two weeks, so please don't tell me to redo everything. What should we change?",
+      "mustReveal": [
+        "the reaction preserved verbatim",
+        "questions about which expectation the experience violates",
+        "separate promise, sequencing, trust, effort, and payoff islands only when supported",
+        "a small artifact or observation plan that does not assume a full rewrite"
+      ]
+    }
+  ]
+}
