@@ -1,0 +1,90 @@
+{
+  "title": "ASCII scope example",
+  "subtitle": "Illustrative input; no real deployment or estimate is asserted.",
+  "start_here": {
+    "lead": "A proposed queue separates request acceptance from job processing.",
+    "bullets": [
+      "The API queues a job.",
+      "A worker claims the job; this example is not implemented."
+    ]
+  },
+  "size_legend": "Example sizes are placeholders, not estimates.",
+  "changes": [
+    {
+      "key": "queue",
+      "title": "Queue job processing",
+      "impact": "example",
+      "diagram_presentation": {
+        "format": "ascii",
+        "mode": "annotated_delta",
+        "divergence_factors": {
+          "boundary_changed": false,
+          "primary_route_changed": false,
+          "stages_reordered_or_reowned": false
+        }
+      },
+      "digest": [
+        [
+          "Today",
+          "Illustrative only: no current implementation was checked."
+        ],
+        [
+          "The change",
+          "Proposed: queue each job for a worker."
+        ],
+        [
+          "Watch out",
+          "Deployment, failure behavior, and estimates are unknown."
+        ]
+      ],
+      "current_state": {
+        "components": [],
+        "edges": []
+      },
+      "new_state": {
+        "components": [
+          {
+            "id": "api",
+            "label": "API",
+            "lane": "API"
+          },
+          {
+            "id": "queue",
+            "label": "Queue",
+            "lane": "Queue"
+          },
+          {
+            "id": "worker",
+            "label": "Worker",
+            "lane": "Worker"
+          }
+        ],
+        "edges": [
+          {
+            "from": "api",
+            "to": "queue",
+            "label": "enqueue"
+          },
+          {
+            "from": "queue",
+            "to": "worker",
+            "label": "claim"
+          }
+        ],
+        "ascii": "API\n | enqueue <job>\n v\nQueue\n | claim\n v\nWorker",
+        "summary": "Illustrative only: the API queues a job and the worker claims it. No deployed system is asserted."
+      },
+      "effort": {
+        "size": "example",
+        "est_days": "unknown",
+        "breakdown": []
+      },
+      "risks": []
+    }
+  ],
+  "caveats": [
+    "This is a generator fixture, not a plan for a real system.",
+    "No user comprehension result is claimed."
+  ],
+  "footer": "Source: the illustrative example-ascii-scopes.json included with this skill."
+}

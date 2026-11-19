@@ -1,0 +1,20 @@
+{
+  "name": "superflux-labs",
+  "interface": {
+    "displayName": "Superflux Labs"
+  },
+  "plugins": [
+    {
+      "name": "sf-learning",
+      "source": {
+        "source": "local",
+        "path": "./plugins/sf-learning"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

@@ -5,16 +5,21 @@
   "description": "Runnable Superflux agent skill labs and proof artifacts.",
   "type": "module",
   "scripts": {
-    "test": "npm run test:explore-unknowns && npm run test:write-through-problems",
+    "test": "npm run test:explore-unknowns && npm run test:write-through-problems && npm run test:cognitive-render && npm run test:explaining-with-html && npm run test:sf-learning",
     "test:explore-unknowns": "node --test evals/skill-quality/explore-unknowns/validate_explore_unknowns.test.mjs",
     "test:write-through-problems": "node --test evals/skill-quality/write-through-problems/validate_write_through_problems.test.mjs",
     "validate": "npm run test && npm run validate:catalog && npm run validate:explore-unknowns && npm run validate:write-through-problems",
     "validate:catalog": "node -e \"const fs=require('node:fs'); const data=JSON.parse(fs.readFileSync('catalog/skills.json','utf8')); if (!Array.isArray(data.skills)) throw new Error('catalog.skills must be an array'); for (const s of data.skills) { if (!s.name || !s.path || !fs.existsSync(s.path + '/SKILL.md')) throw new Error('invalid skill entry: ' + JSON.stringify(s)); } console.log('catalog validation passed')\"",
     "validate:explore-unknowns": "node evals/skill-quality/explore-unknowns/validate_explore_unknowns.mjs",
-    "validate:write-through-problems": "node evals/skill-quality/write-through-problems/validate_write_through_problems.mjs"
+    "validate:write-through-problems": "node evals/skill-quality/write-through-problems/validate_write_through_problems.mjs",
+    "test:cognitive-render": "node --test evals/skill-quality/cognitive-render/verify_human_readable_output.test.mjs",
+    "test:explaining-with-html": "node --test evals/skill-quality/explaining-with-html/page-budget-check.test.mjs evals/skill-quality/explaining-with-html/diagram-fit-check.test.mjs evals/skill-quality/explaining-with-html/fonts.test.mjs",
+    "test:sf-learning": "node --test plugins/sf-learning/test/backfill.test.mjs plugins/sf-learning/test/capture-prompt.test.mjs plugins/sf-learning/test/capture.test.mjs plugins/sf-learning/test/classify.test.mjs plugins/sf-learning/test/context.test.mjs plugins/sf-learning/test/iterationReview.test.mjs plugins/sf-learning/test/paths.test.mjs plugins/sf-learning/test/process.test.mjs plugins/sf-learning/test/profile.test.mjs plugins/sf-learning/test/proposalReview.test.mjs plugins/sf-learning/test/propose.test.mjs plugins/sf-learning/test/provenance.test.mjs plugins/sf-learning/test/redact.test.mjs plugins/sf-learning/test/rescore.test.mjs",
+    "validate:cognitive-render": "npm run test:cognitive-render",
+    "validate:explaining-with-html": "npm run test:explaining-with-html"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "license": "MIT-0"
 }

@@ -1,0 +1,38 @@
+{
+  "name": "superflux-labs",
+  "owner": {
+    "name": "Superflux"
+  },
+  "metadata": {
+    "description": "Superflux Labs public plugins.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "sf-learning",
+      "source": "./plugins/sf-learning",
+      "description": "Learns writing rules from your own conversations: captures each prompt with the reply it reacts to into a local, redacted corpus, and proposes reviewed rule changes to the writing skills. Never edits a skill file without your approval.",
+      "version": "0.5.2",
+      "author": {
+        "name": "Superflux"
+      },
+      "homepage": "https://github.com/SuperfluxExp/superflux-labs/tree/main/plugins/sf-learning",
+      "repository": "https://github.com/SuperfluxExp/superflux-labs",
+      "license": "MIT-0",
+      "keywords": [
+        "style",
+        "capture",
+        "writing",
+        "skill-maintenance",
+        "hooks",
+        "claude-code",
+        "codex"
+      ],
+      "tags": [
+        "developer-tools",
+        "agent-operations",
+        "writing"
+      ]
+    }
+  ]
+}

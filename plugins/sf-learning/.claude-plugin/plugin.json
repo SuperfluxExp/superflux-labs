@@ -1,0 +1,19 @@
+{
+  "name": "sf-learning",
+  "version": "0.5.2",
+  "description": "Learns writing rules from your own conversations. Captures every prompt into a local style corpus, flags the corrections, and later proposes reviewed diffs to the writing skills \u2014 never editing a skill file directly.",
+  "author": {
+    "name": "Superflux"
+  },
+  "repository": "https://github.com/SuperfluxExp/superflux-labs",
+  "homepage": "https://github.com/SuperfluxExp/superflux-labs/tree/main/plugins/sf-learning",
+  "license": "MIT-0",
+  "keywords": [
+    "style",
+    "capture",
+    "writing",
+    "skill-maintenance",
+    "claude-code",
+    "codex"
+  ]
+}

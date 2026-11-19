@@ -90,6 +90,70 @@ The package includes a reusable [recursive thought map](skills/write-through-pro
 
 See the passing [Quick-mode sample run](content/proof/write-through-problems/2026-07-25-sample-run.md): 1,076 words, 16/16 rubric, no hard failures.
 
+### Reader-first skills: `cognitive-render`, `explaining-with-html` and `sf-learning`
+
+Three packages by Kandarp Jani for one problem: agents finish the work faster than a person can read what they report. `cognitive-render` writes the words, `explaining-with-html` draws the page, and `sf-learning` turns the moments the reader gets lost into rule changes for both, with the reader's approval.
+
+#### `cognitive-render`
+
+Writing rules for anything an agent writes to explain - summaries, briefs, status updates, root-cause analyses:
+
+- give the answer first, then the detail;
+- every important sentence names who acted, on what, and what changed;
+- concise, not compressed: cut filler, never the actor, the condition or the result;
+- no invented labels and no analogies the reader did not ask for;
+- a twelve-step reading check plus a deterministic verifier script before delivery.
+
+```bash
+npx -y skills add . --skill cognitive-render --agent claude-code codex --copy -y --full-depth
+npm run test:cognitive-render
+```
+
+Proof: [plain-wording sample](content/proof/cognitive-render/sample-run.md).
+
+#### `explaining-with-html`
+
+For answers too big for a chat reply. The skill builds one self-contained HTML page:
+
+- the answer in one sentence, then one picture of how it works;
+- every section opens on a figure with a caption of at most two sentences;
+- evidence, file paths and long tables fold into expanders;
+- at most 1,200 visible words, checked by `assets/page-budget-check.mjs`;
+- fixed colour meanings and one copy-ready reply at the end of every review page.
+
+It uses `cognitive-render`'s writing rules. Fonts are embedded so pages render offline.
+
+```bash
+npx -y skills add . --skill explaining-with-html --agent claude-code codex --copy -y --full-depth
+npm run test:explaining-with-html
+```
+
+Proof: [same facts, rebuilt picture-first](content/proof/explaining-with-html/sample-run.md) - 3,101 visible words and 0 figures became 1,058 and 7.
+
+#### `sf-learning` (plugin)
+
+Learns writing rules from the moments you get lost:
+
+- a hook captures each prompt you type with the agent reply it reacts to, on your machine, with secrets removed first;
+- `/sf-learning:process` sorts each prompt: a missing rule, a rule too vague to help, a clear rule that was ignored, or not about writing;
+- a problem seen in two different sessions becomes a proposal on a review page;
+- nothing changes a skill without your approval, and one guarded script writes only on a `sf-learning/propose-*` branch.
+
+Install in Claude Code:
+
+```bash
+/plugin marketplace add SuperfluxExp/superflux-labs
+/plugin install sf-learning@superflux-labs
+```
+
+Codex reads the same plugin from `.agents/plugins/marketplace.json`. sf-learning proposes changes to `skills/cognitive-render/SKILL.md` and `skills/explaining-with-html/SKILL.md` in the repository you run it from.
+
+```bash
+npm run test:sf-learning
+```
+
+Proof: [one month of real use](content/proof/sf-learning/sample-run.md) - 104 problems across 52 sessions, 19 that changed nothing, 5 approved rule changes.
+
 ### Agent runbooks
 
 AI agents do not need more prompt dumps. They need operating procedures.
@@ -197,6 +261,8 @@ The best contributions are not shiny prompts. They are repeatable loops that lea
 The `explore-unknowns` package is a source-grounded skill package, not an article mirror. It credits the public source, preserves short excerpts in a ledger, and converts the idea into a runnable agent workflow. It does not imply endorsement from Thariq, Anthropic, David/dzhng, or Fable.
 
 The `write-through-problems` package publishes Kandarp Jani's own March 2023 Recursive Thought Writing process with his explicit permission. The original presentation is not included; the public package contains the attributed method, agent adaptations, template, and evaluations.
+
+The reader-first skills (`cognitive-render`, `explaining-with-html`, `sf-learning`) are Kandarp Jani's own packages, published with his permission. The verifier's phrase checks adapt Hardik Pandya's [stop-slop](https://github.com/hardikpandya/stop-slop) (MIT). The STE-inspired writing rules reference [ASD-STE100 Issue 9](https://www.asd-ste100.org/assets/files/ASD-STE100_ISSUE9.pdf) and do not claim compliance with it. `explaining-with-html` embeds Instrument Sans and IBM Plex Mono under the SIL Open Font License.
 
 The first seed for Agent Runbooks came from public discussion around Peter Steinberger's Architecture Satisfaction Loop, including Loop Library's [Architecture Refactoring Loop for Coding Agents](https://signals.forwardfuture.com/loop-library/loops/architecture-satisfaction-loop/), and the broader idea of repeatable agent loops.
 
