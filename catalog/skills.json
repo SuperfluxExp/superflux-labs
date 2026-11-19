@@ -41,6 +41,64 @@
       "license": "MIT-0",
       "proof": "content/proof/write-through-problems/2026-07-25-sample-run.md",
       "releaseGate": "skill-quality-v0"
+    },
+    {
+      "name": "cognitive-render",
+      "displayName": "Cognitive Render",
+      "status": "candidate",
+      "description": "Write summaries, briefs, status updates and root-cause analyses that a reader understands on the first read: answer first, who did what to what, concise but never compressed, no invented labels, with a deterministic verifier.",
+      "path": "skills/cognitive-render",
+      "supportedRuntimes": [
+        "claude-code",
+        "codex"
+      ],
+      "categories": [
+        "Writing",
+        "Communication",
+        "Agent Workflow"
+      ],
+      "license": "MIT-0",
+      "proof": "content/proof/cognitive-render/sample-run.md",
+      "releaseGate": "skill-quality-v0"
+    },
+    {
+      "name": "explaining-with-html",
+      "displayName": "Explaining With HTML",
+      "status": "candidate",
+      "description": "Turn substantial agent answers into one self-contained HTML page: the answer and one picture first, a figure per section, short captions, proof folded into expanders, and a checked 1,200 visible-word budget.",
+      "path": "skills/explaining-with-html",
+      "supportedRuntimes": [
+        "claude-code",
+        "codex"
+      ],
+      "categories": [
+        "Communication",
+        "Decision Support",
+        "Developer Tools"
+      ],
+      "license": "MIT-0",
+      "proof": "content/proof/explaining-with-html/sample-run.md",
+      "releaseGate": "skill-quality-v0"
+    }
+  ],
+  "plugins": [
+    {
+      "name": "sf-learning",
+      "displayName": "sf-learning",
+      "status": "candidate",
+      "description": "Learns writing rules from your own conversations: captures each prompt with the reply it reacts to into a local, redacted corpus, and proposes reviewed rule changes to the writing skills. Never edits a skill file without your approval.",
+      "path": "plugins/sf-learning",
+      "supportedRuntimes": [
+        "claude-code",
+        "codex"
+      ],
+      "categories": [
+        "Writing",
+        "Agent Workflow",
+        "Developer Tools"
+      ],
+      "license": "MIT-0",
+      "proof": "content/proof/sf-learning/sample-run.md"
     }
   ]
 }

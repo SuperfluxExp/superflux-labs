@@ -1,0 +1,82 @@
+{
+  "schema": "superflux.stop_slop_adaptation.v0.1",
+  "source": {
+    "repository": "https://github.com/hardikpandya/stop-slop",
+    "commit": "8da1f030185bdfe8471220585162991eaeb970e9",
+    "reviewedAt": "2026-10-30",
+    "reviewWithinDays": 90,
+    "license": "MIT"
+  },
+  "adopted": {
+    "phrases": [
+      "here's the thing",
+      "here's what",
+      "here's why",
+      "let that sink in",
+      "it turns out",
+      "the uncomfortable truth is",
+      "make no mistake",
+      "at its core",
+      "it's worth noting",
+      "at the end of the day",
+      "in a world where",
+      "the implications are significant",
+      "the stakes are high",
+      "lean into",
+      "circle back"
+    ],
+    "structures": [
+      "binary contrast",
+      "negative listing",
+      "dramatic fragmentation",
+      "rhetorical setup",
+      "false agency",
+      "narrator from a distance",
+      "metronomic rhythm"
+    ]
+  },
+  "localAdditions": {
+    "reason": "Superflux added these with the verifier on 2026-08-03. They are not in upstream stop-slop, so an upstream review must keep them, not drop them.",
+    "phrases": [
+      "this highlights the importance of",
+      "moving the needle"
+    ],
+    "compressedLabels": [
+      "control plane",
+      "decision fabric",
+      "execution spine",
+      "governance layer",
+      "operating surface",
+      "render surface",
+      "truth layer",
+      "verification fabric"
+    ]
+  },
+  "localOverrides": [
+    {
+      "upstreamRule": "Kill all adverbs",
+      "localRule": "Remove adverbs that add no meaning. Keep one when it states an important condition, timing, or degree.",
+      "reason": "A blanket ban removes useful engineering distinctions and can make prose unnatural."
+    },
+    {
+      "upstreamRule": "No em dashes",
+      "localRule": "Use punctuation that makes the sentence easy to read. Reject repeated dramatic em dashes, not the character itself.",
+      "reason": "Punctuation is not slop by itself. Rhythm and clarity decide whether it belongs."
+    },
+    {
+      "upstreamRule": "Two items beat three",
+      "localRule": "Use the number of items the source actually contains. Group or layer long lists when the reader cannot retain them.",
+      "reason": "Artificially cutting a real three-part set loses information."
+    },
+    {
+      "upstreamRule": "Every sentence needs a human subject",
+      "localRule": "Name the real actor, including a service, page, job, or person. Do not assign human motives to software.",
+      "reason": "Engineering explanations often need software components as literal actors."
+    },
+    {
+      "upstreamRule": "Sentence starts with a Wh- word",
+      "localRule": "Remove rhetorical questions and repeated formulaic openings. Keep a Wh- opening when it is the clearest direct question.",
+      "reason": "Grammar alone does not determine whether a sentence is AI slop."
+    }
+  ]
+}
